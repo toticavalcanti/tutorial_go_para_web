@@ -9,7 +9,6 @@ Agora execute o arquivo com:
 go run main.go
 ```
 Acesse no browser:
-<<<<<<< HEAD
 =======
 [localhost:8000](http://127.0.0.1:8000:8000/)
 
@@ -24,5 +23,5 @@ Run the main.go file:
 go run main.go
 ```
 Access in the browser:
->>>>>>> initial_branch
+initial_branch
 [localhost:8000](http://127.0.0.1:8000:8000/)
