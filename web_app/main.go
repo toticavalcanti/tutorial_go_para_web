@@ -11,7 +11,7 @@ var templates *template.template
 func main(){
 	templates = template.Must(template.ParseGlob("templates/*.html"))
 	r := mux.NewRouter()
-	r.HandleFunc("/hello", indexHandler).Methods("GET")
+	r.HandleFunc("/", indexHandler).Methods("GET")
 	http.Handle("/", r)
 	http.ListenAndServe(":8000", nil)
 }
