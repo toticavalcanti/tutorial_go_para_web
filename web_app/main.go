@@ -6,6 +6,8 @@ import(
 	"html/template"
  )	
 
+var templates *template.template
+
 func main(){
 	r := mux.NewRouter()
 	r.HandleFunc("/hello", helloHandler).Methods("GET")
@@ -15,11 +17,6 @@ func main(){
 }
 
  //request hello handle
- func helloHandler(w http.ResponseWriter, r *http.Request){
+ func indexHandler(w http.ResponseWriter, r *http.Request){
  	fmt.Fprint(w, "Hello world!")
- }
-
- //request goodbye handle
- func goodbyeHandler(w http.ResponseWriter, r *http.Request){
- 	fmt.Fprint(w, "Goodbye world!")
  }
