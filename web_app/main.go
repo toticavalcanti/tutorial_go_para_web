@@ -9,14 +9,14 @@ import(
 var templates *template.template
 
 func main(){
+	templates = template.Must(template.ParseGlob("templates/*.html"))
 	r := mux.NewRouter()
-	r.HandleFunc("/hello", helloHandler).Methods("GET")
-	r.HandleFunc("/goodbye", goodbyeHandler).Methods("GET")
+	r.HandleFunc("/hello", indexHandler).Methods("GET")
 	http.Handle("/", r)
 	http.ListenAndServe(":8000", nil)
 }
 
  //request hello handle
  func indexHandler(w http.ResponseWriter, r *http.Request){
- 	fmt.Fprint(w, "Hello world!")
+ 	templates.ExecuteTemplate(w, "index.html", nil)
  }
