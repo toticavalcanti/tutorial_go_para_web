@@ -1,8 +1,11 @@
 <html>
 	<head>
-		<title>Página principal</title>
+		<title>Comments</title>
 	</head>
 	<body>
-		<h1>Um texto em H1</h1>
+		<h1>Comentários</h1>
+		{{ range . }}
+		<div>{{ . }}</div>
+		{{ end }}
 	</body>
 </html>
