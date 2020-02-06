@@ -98,14 +98,7 @@ func registerPostHandler(w http.ResponseWriter, r *http.Request){
 	r.ParseForm()
 	username := r.PostForm.Get("username")
 	password := r.PostForm.Get("password")
-	cost := bcrypt.DefaultCost
-	hash, err := bcrypt.GenerateFromPassword([]byte(password), cost)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
- 		w.Write([]byte("Internal server error"))
- 		return
-	}
-	err = client.Set("user: " + username, hash, 0).Err()
+	err := models.RegisterUser(username, password)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
  		w.Write([]byte("Internal server error"))
