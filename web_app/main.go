@@ -4,15 +4,16 @@ import(
 	"net/http"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
-	
 	"golang.org/x/crypto/bcrypt"
 	"html/template"
+	"./models"
  )	
 //globals variables
 var store = sessions.NewCookieStore([]byte("t0p-s3cr3t"))
 var templates *template.Template
 
 func main(){
+	models.Init()
 	templates = template.Must(template.ParseGlob("templates/*.html"))
 	r := mux.NewRouter()
 	r.HandleFunc("/", AuthRequired(indexGetHandler)).Methods("GET")
