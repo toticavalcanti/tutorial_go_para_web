@@ -9,7 +9,6 @@ import(
 	"html/template"
  )	
 //globals variables
-var client *redis.Client
 var store = sessions.NewCookieStore([]byte("t0p-s3cr3t"))
 var templates *template.Template
 
