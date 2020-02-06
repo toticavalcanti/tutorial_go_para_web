@@ -82,7 +82,6 @@ func loginPostHandler(w http.ResponseWriter, r *http.Request){
 		}
 		return
 	}
-	
 	session, _ := store.Get(r, "session")
 	session.Values["username"] = username
 	session.Save(r, w)

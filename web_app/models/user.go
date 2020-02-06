@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"github.com/go-redis/redis"
 	"golang.org/x/crypto/bcrypt"
 )
