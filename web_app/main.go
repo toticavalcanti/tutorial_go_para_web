@@ -41,7 +41,7 @@ func AuthRequired(handler http.HandlerFunc) http.HandlerFunc {
 }
 
  func indexGetHandler(w http.ResponseWriter, r *http.Request) {
- 	comments, err := client.LRange("comments", 0, 10).Result()
+ 	comments, err := models.GetComments()
  	if err != nil{
  		w.WriteHeader(http.StatusInternalServerError)
  		w.Write([]byte("Internal server error"))
@@ -53,7 +53,7 @@ func AuthRequired(handler http.HandlerFunc) http.HandlerFunc {
   func indexPostHandler(w http.ResponseWriter, r *http.Request){
  	r.ParseForm()
  	comment := r.PostForm.Get("comment")
- 	err := client.LPush("comments", comment).Err()
+ 	err := models.PostComment(comment)
  	if err != nil{
  		w.WriteHeader(http.StatusInternalServerError)
  		w.Write([]byte("Internal server error"))
