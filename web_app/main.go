@@ -4,7 +4,7 @@ import(
 	"net/http"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
-	"github.com/go-redis/redis"
+	
 	"golang.org/x/crypto/bcrypt"
 	"html/template"
  )	
@@ -13,9 +13,6 @@ var store = sessions.NewCookieStore([]byte("t0p-s3cr3t"))
 var templates *template.Template
 
 func main(){
-	client = redis.NewClient(&redis.Options{
-		Addr: "localhost:6379",
-	})
 	templates = template.Must(template.ParseGlob("templates/*.html"))
 	r := mux.NewRouter()
 	r.HandleFunc("/", AuthRequired(indexGetHandler)).Methods("GET")
