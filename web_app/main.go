@@ -4,7 +4,6 @@ import(
 	"net/http"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
-	"golang.org/x/crypto/bcrypt"
 	"html/template"
 	"./models"
  )	
@@ -70,20 +69,20 @@ func loginPostHandler(w http.ResponseWriter, r *http.Request){
 	r.ParseForm()
 	username := r.PostForm.Get("username")
 	password := r.PostForm.Get("password")
-	hash, err := client.Get("user: " + username).Bytes()
-	if err == redis.Nil{
-		templates.ExecuteTemplate(w, "login.html", "unknown user")
+	err := models.AuthenticateUser(username, password)
+	if err != nil{
+		switch err {
+		case models.ErrUserNotFound:
+			templates.ExecuteTemplate(w, "login.html", "unknown user")
+		case models.ErrInvalidLogin:
+			templates.ExecuteTemplate(w, "login.html", "invalid login")
+		default:
+			w.WriteHeader(http.StatusInternalServerError)
+ 			w.Write([]byte("Internal server error"))
+		}
 		return
-	} else if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
- 		w.Write([]byte("Internal server error"))
- 		return
 	}
-	err = bcrypt.CompareHashAndPassword(hash, []byte(password))
-	if err != nil {
-		templates.ExecuteTemplate(w, "login.html", "invalid login")
-		return
-	}
+	
 	session, _ := store.Get(r, "session")
 	session.Values["username"] = username
 	session.Save(r, w)
