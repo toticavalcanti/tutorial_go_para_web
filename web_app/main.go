@@ -3,9 +3,8 @@ package main
 import(
 	"net/http"
 	"github.com/gorilla/mux"
-
-	"html/template"
 	"./models"
+	"./sessions"
  )	
 //globals variables
 var templates *template.Template
@@ -28,7 +27,7 @@ func main(){
 
 func AuthRequired(handler http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request){
- 	session, _ := store.Get(r, "session")
+ 	session, _ := sessions.Store.Get(r, "session")
  	_, ok := session.Values["username"]
  	if !ok {
  		http.Redirect(w, r, "/login", 302)
@@ -81,7 +80,7 @@ func loginPostHandler(w http.ResponseWriter, r *http.Request){
 		}
 		return
 	}
-	session, _ := store.Get(r, "session")
+	session, _ := sessions.Store.Get(r, "session")
 	session.Values["username"] = username
 	session.Save(r, w)
 	http.Redirect(w, r, "/", 302)
