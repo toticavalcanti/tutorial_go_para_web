@@ -6,19 +6,24 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+var (
+	ErrUserNotFound = errors.New("user not found")
+	ErrInvalidLogin = errors.New("invalid login")
+)
+
 func AuthenticateUser(username, password string) error {
 	hash, err := client.Get("user: " + username).Bytes()
 	if err == redis.Nil{
-		return
+		return ErrUserNotFound
 	} else if err != nil {
-		
+		return err
 	}
 	err = bcrypt.CompareHashAndPassword(hash, []byte(password))
 	if err != nil {
 		
-		return
+		return ErrInvalidLogin
 	}
-
+	return nil
 }
 
 func RegisterUser(username, password string) error{

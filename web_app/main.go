@@ -3,12 +3,11 @@ package main
 import(
 	"net/http"
 	"github.com/gorilla/mux"
-	"github.com/gorilla/sessions"
+
 	"html/template"
 	"./models"
  )	
 //globals variables
-var store = sessions.NewCookieStore([]byte("t0p-s3cr3t"))
 var templates *template.Template
 
 func main(){
