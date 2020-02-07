@@ -10,8 +10,8 @@ import(
 
 func NewRouter() *mux.Router{
 	r := mux.NewRouter()
-	r.HandleFunc("/", AuthRequired(indexGetHandler)).Methods("GET")
-	r.HandleFunc("/", AuthRequired(indexPostHandler)).Methods("POST")
+	r.HandleFunc("/", middleware.AuthRequired(indexGetHandler)).Methods("GET")
+	r.HandleFunc("/", middleware.AuthRequired(indexPostHandler)).Methods("POST")
 	r.HandleFunc("/login", loginGetHandler).Methods("GET")
 	r.HandleFunc("/login", loginPostHandler).Methods("POST")
 	r.HandleFunc("/register", registerGetHandler).Methods("GET")
