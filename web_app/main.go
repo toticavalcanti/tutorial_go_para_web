@@ -2,7 +2,7 @@ package main
 
 import(
 	"net/http"
-	"github.com/gorilla/mux"
+	"./routes"
 	"./models"
 	"./sessions"
 	"./utils"
@@ -11,15 +11,7 @@ import(
 func main(){
 	models.Init()
 	utils.LoadTemplates("templates/*.html")
-	r := mux.NewRouter()
-	r.HandleFunc("/", AuthRequired(indexGetHandler)).Methods("GET")
-	r.HandleFunc("/", AuthRequired(indexPostHandler)).Methods("POST")
-	r.HandleFunc("/login", loginGetHandler).Methods("GET")
-	r.HandleFunc("/login", loginPostHandler).Methods("POST")
-	r.HandleFunc("/register", registerGetHandler).Methods("GET")
-	r.HandleFunc("/register", registerPostHandler).Methods("POST")	
-	fs := http.FileServer(http.Dir("./static/"))
-	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", fs))
+	r := routes.NewRouter()
 	http.Handle("/", r)
 	http.ListenAndServe(":8000", nil)
 }
@@ -43,7 +35,7 @@ func AuthRequired(handler http.HandlerFunc) http.HandlerFunc {
  		w.Write([]byte("Internal server error"))
  		return
  	}
- 	templates.ExecuteTemplate(w, "index.html", comments)
+ 	utils.ExecuteTemplate(w, "index.html", comments)
  }
 
   func indexPostHandler(w http.ResponseWriter, r *http.Request){
@@ -59,7 +51,7 @@ func AuthRequired(handler http.HandlerFunc) http.HandlerFunc {
  }
 
 func loginGetHandler(w http.ResponseWriter, r *http.Request){
-	templates.ExecuteTemplate(w, "login.html", nil)
+	utils.ExecuteTemplate(w, "login.html", nil)
 }
 
 func loginPostHandler(w http.ResponseWriter, r *http.Request){
@@ -70,9 +62,9 @@ func loginPostHandler(w http.ResponseWriter, r *http.Request){
 	if err != nil{
 		switch err {
 		case models.ErrUserNotFound:
-			templates.ExecuteTemplate(w, "login.html", "unknown user")
+			utils.ExecuteTemplate(w, "login.html", "unknown user")
 		case models.ErrInvalidLogin:
-			templates.ExecuteTemplate(w, "login.html", "invalid login")
+			utils.ExecuteTemplate(w, "login.html", "invalid login")
 		default:
 			w.WriteHeader(http.StatusInternalServerError)
  			w.Write([]byte("Internal server error"))
@@ -86,7 +78,7 @@ func loginPostHandler(w http.ResponseWriter, r *http.Request){
 }
 
 func registerGetHandler(w http.ResponseWriter, r *http.Request){
-	templates.ExecuteTemplate(w, "register.html", nil)
+	utils.ExecuteTemplate(w, "register.html", nil)
 }
 
 func registerPostHandler(w http.ResponseWriter, r *http.Request){
