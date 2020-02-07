@@ -10,7 +10,7 @@ import(
 
 func main(){
 	models.Init()
-	templates = template.Must(template.ParseGlob("templates/*.html"))
+	utils.LoadTemplates("templates/*.html")
 	r := mux.NewRouter()
 	r.HandleFunc("/", AuthRequired(indexGetHandler)).Methods("GET")
 	r.HandleFunc("/", AuthRequired(indexPostHandler)).Methods("POST")
