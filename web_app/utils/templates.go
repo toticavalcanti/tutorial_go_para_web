@@ -2,6 +2,7 @@ package utils
 
 import(
 	"html/template"
+	"net/http"
 )
 
 var templates *template.Template
@@ -11,5 +12,5 @@ func LoadTemplates(pattern string){
 }
 
 func ExecuteTemplate(w http.ResponseWriter, tmpl string, data interface{}){
-	templates.ExecuteTemplate(w, "index.html", comments)	
+	templates.ExecuteTemplate(w, tmpl, data)	
 }
