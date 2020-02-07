@@ -5,9 +5,8 @@ import(
 	"github.com/gorilla/mux"
 	"./models"
 	"./sessions"
+	"./utils"
  )	
-//globals variables
-var templates *template.Template
 
 func main(){
 	models.Init()
