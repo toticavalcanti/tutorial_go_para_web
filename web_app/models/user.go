@@ -12,12 +12,12 @@ var (
 	ErrInvalidLogin = errors.New("invalid login")
 )
 
-type User struct{
+type User struct {
 	key string
 }
 
-func NewUser(username string, hash []byte) (*User, error){
-	id, err := client.Incr("user: next-id").Result()
+func NewUser(username string, hash []byte) (*User, error) {
+	id, err := client.Incr("user:next-id").Result()
 	if err != nil {
 		return nil, err
 	}
@@ -34,7 +34,7 @@ func NewUser(username string, hash []byte) (*User, error){
 	return &User{key}, nil
 }
 
-func (user *User) GetUserName() (string, error) {
+func (user *User) GetUsername() (string, error) {
 	return client.HGet(user.key, "username").Result()
 }
 

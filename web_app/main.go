@@ -1,16 +1,16 @@
 package main
 
-import(
+import (
 	"net/http"
 	"./routes"
 	"./models"
 	"./utils"
- )	
+)
 
-func main(){
+func main() {
 	models.Init()
 	utils.LoadTemplates("templates/*.html")
 	r := routes.NewRouter()
 	http.Handle("/", r)
-	http.ListenAndServe(":8000", nil)
+	http.ListenAndServe(":8080", nil)
 }

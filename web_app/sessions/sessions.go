@@ -1,6 +1,6 @@
 package sessions
 
-import(
+import (
 	"github.com/gorilla/sessions"
 )
 
