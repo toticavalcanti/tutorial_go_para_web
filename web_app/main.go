@@ -2,6 +2,7 @@ package main
 
 import(
 	"fmt"
+	"log"
 	"net/http"
  )	
 
@@ -12,5 +13,5 @@ import(
 
 func main(){
 	http.HandleFunc("/", handler)
-	http.ListenAndServe(":8000", nil)
+	log.Fatal(http.ListenAndServe(":8000", nil))
 }
