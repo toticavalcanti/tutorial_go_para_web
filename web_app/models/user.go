@@ -54,6 +54,11 @@ func (user *User) Authenticate(password string) error {
 	return err
 }
 
+func GetUserById(id int64) (*User, error) {
+	key := fmt.Sprintf("user:%d", id)
+	return &User{key}, nil
+}
+
 func GetUserByUsername(username string) (*User, error) {
 	id, err := client.HGet("user:by-username", username).Int64()
 	if err == redis.Nil {
