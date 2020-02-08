@@ -1,15 +1,15 @@
 package models
 
-import(
+import (
 	"fmt"
 )
 
-type Update struct{
+type Update struct {
 	key string
 }
 
-func NewUpdate(userId int64, body string) (*Update, error){
-	id, err := client.Incr("update: next-id").Result()
+func NewUpdate(userId int64, body string) (*Update, error) {
+	id, err := client.Incr("update:next-id").Result()
 	if err != nil {
 		return nil, err
 	}
@@ -38,13 +38,14 @@ func (update *Update) GetUser() (*User, error) {
 	return GetUserById(userId)
 }
 
+
 func GetUpdates() ([]*Update, error) {
 	updateIds, err := client.LRange("updates", 0, 10).Result()
 	if err != nil {
 		return nil, err
 	}
 	updates := make([]*Update, len(updateIds))
-	for i, id := range updateIds{
+	for i, id := range updateIds {
 		key := "update:" + id
 		updates[i] = &Update{key}
 	}
