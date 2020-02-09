@@ -21,12 +21,12 @@ func main(){
  	fmt.Fprint(w, "This is the index page!")
  }
 
- //request hi everyone! page handle
+ //request contact page handle
  func contactHandler(w http.ResponseWriter, r *http.Request){
  	fmt.Fprint(w, "This is the contact page!")
  }
 
- //request bye bye! page handle
+ //request about page handle
  func aboutHandler(w http.ResponseWriter, r *http.Request){
  	fmt.Fprint(w, "This is the about page!")
  }
