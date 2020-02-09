@@ -16,17 +16,17 @@ func main(){
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }
 
- //request index handle
+ //request index page handle
  func indexHandler(w http.ResponseWriter, r *http.Request){
  	fmt.Fprint(w, "This is the index page of your web aplication!")
  }
 
- //request hi everyone! handle
+ //request hi everyone! page handle
  func hiHandler(w http.ResponseWriter, r *http.Request){
  	fmt.Fprint(w, "Hi everyone!")
  }
 
- //request bye bye! handle
+ //request bye bye! page handle
  func byeHandler(w http.ResponseWriter, r *http.Request){
  	fmt.Fprint(w, "bye bye!")
  }
