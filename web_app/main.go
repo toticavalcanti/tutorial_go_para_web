@@ -2,24 +2,25 @@ package main
 
 import(
 	"fmt"
+	"log"
 	"net/http"
 	"github.com/gorilla/mux"
  )	
 
 func main(){
 	r := mux.NewRouter()
-	r.HandleFunc("/hello", helloHandler).Methods("GET")
-	r.HandleFunc("/goodbye", goodbyeHandler).Methods("GET")
+	r.HandleFunc("/hi", hiHandler).Methods("GET")
+	r.HandleFunc("/bye", byeHandler).Methods("GET")
 	http.Handle("/", r)
-	http.ListenAndServe(":8000", nil)
+	log.Fatal(http.ListenAndServe(":8000", nil))
 }
 
  //request hello handle
- func helloHandler(w http.ResponseWriter, r *http.Request){
- 	fmt.Fprint(w, "Hello world!")
+ func hiHandler(w http.ResponseWriter, r *http.Request){
+ 	fmt.Fprint(w, "Hi everyone!")
  }
 
  //request goodbye handle
- func goodbyeHandler(w http.ResponseWriter, r *http.Request){
- 	fmt.Fprint(w, "Goodbye world!")
+ func byeHandler(w http.ResponseWriter, r *http.Request){
+ 	fmt.Fprint(w, "bye bye!")
  }
