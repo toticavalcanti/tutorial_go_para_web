@@ -7,6 +7,16 @@ body {
     background: #f0f0f0;
 }
 
+button {
+  background-color: #7a7a7a;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
 nav {
     padding: 0.5em;
     background: #fff;
