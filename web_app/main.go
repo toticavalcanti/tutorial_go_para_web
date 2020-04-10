@@ -1,7 +1,6 @@
 package main
 
 import(
-	"fmt"
 	"log"
 	"net/http"
 	"github.com/gorilla/mux"
@@ -22,16 +21,15 @@ func main(){
 
  //request index page handle
  func indexHandler(w http.ResponseWriter, r *http.Request){
- 	templates.ExecuteTemplate(w, "index.html", nil)
- 	fmt.Fprint(w, "This is the index page!")
+ 	templates.ExecuteTemplate(w, "index.html", "This is the index page!")
  }
 
  //request contact page handle
  func contactHandler(w http.ResponseWriter, r *http.Request){
- 	fmt.Fprint(w, "This is the contact page!")
+    templates.ExecuteTemplate(w, "contact.html", "This is the contact page!")
  }
 
  //request about page handle
  func aboutHandler(w http.ResponseWriter, r *http.Request){
- 	fmt.Fprint(w, "This is the about page!")
+    templates.ExecuteTemplate(w, "about.html", "This is the about page!")
  }
