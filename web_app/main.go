@@ -16,10 +16,12 @@ func main(){
 	})
 	templates = template.Must(template.ParseGlob("templates/*.html"))
 	r := mux.NewRouter()
+	r.HandleFunc("/contact", contactHandler).Methods("GET") 
+	r.HandleFunc("/about", aboutHandler).Methods("GET")
 	r.HandleFunc("/", indexGetHandler).Methods("GET")
 	r.HandleFunc("/", indexPostHandler).Methods("POST")
 	http.Handle("/", r)
-	http.ListenAndServe(":8000", nil)
+	http.ListenAndServe(":8001", nil)
 }
 
  //request hello handle
@@ -36,4 +38,14 @@ func main(){
  	comment := r.PostForm.Get("comment")
  	client.LPush("comments", comment)
  	http.Redirect(w, r, "/", 302)
+ }
+
+ //request contact page handle
+func contactHandler(w http.ResponseWriter, r *http.Request){
+	templates.ExecuteTemplate(w, "contact.html", "This is the contact page!")
+ }
+ 
+ //request about page handle
+ func aboutHandler(w http.ResponseWriter, r *http.Request){
+	templates.ExecuteTemplate(w, "about.html", "This is the about page!")
  }
