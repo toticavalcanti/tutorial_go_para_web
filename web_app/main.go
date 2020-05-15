@@ -33,10 +33,14 @@ func main(){
  	templates.ExecuteTemplate(w, "index.html", comments)
  }
 
+//request index page POST handle
   func indexPostHandler(w http.ResponseWriter, r *http.Request){
- 	r.ParseForm()
- 	comment := r.PostForm.Get("comment")
- 	client.LPush("comments", comment)
+	r.ParseForm()
+	//get the comment in html tag comment
+	comment := r.PostForm.Get("comment")
+	//push the comment to the comments list
+	client.LPush("comments", comment)
+	 // redirect to / when the submit form
  	http.Redirect(w, r, "/", 302)
  }
 
