@@ -26,7 +26,8 @@ func main() {
 	r.HandleFunc("/", indexPostHandler).Methods("POST")
 	r.HandleFunc("/login", loginGetHandler).Methods("GET")
 	r.HandleFunc("/login", loginPostHandler).Methods("POST")
-	r.HandleFunc("/test", testGetHandler).Methods("GET")
+	r.HandleFunc("/register", registerGetHandler).Methods("GET")
+	r.HandleFunc("/register", registerPostHandler).Methods("POST")	
 	fs := http.FileServer(http.Dir("./static/"))
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", fs))
 	http.Handle("/", r)
@@ -56,9 +57,19 @@ func loginGetHandler(w http.ResponseWriter, r *http.Request) {
 func loginPostHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	username := r.PostForm.Get("username")
+	password := r.PostForm.Get("password")
+	hash, err := client.Get("user: " + username).Bytes()
+	if err != nil{
+		return
+	}
+	err = bcrypt.CompareHashAndPassword(hash, []byte(password))
+	if err != nil{
+		return
+	}
 	session, _ := store.Get(r, "session")
 	session.Values["username"] = username
 	session.Save(r, w)
+	http.Redirect(w, r, "/", 302)
 }
 
 func testGetHandler(w http.ResponseWriter, r *http.Request) {
