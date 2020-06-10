@@ -21,8 +21,6 @@ func main() {
 	})
 	templates = template.Must(template.ParseGlob("templates/*.html"))
 	r := mux.NewRouter()
-	r.HandleFunc("/contact", contactHandler).Methods("GET")
-	r.HandleFunc("/about", aboutHandler).Methods("GET")
 	r.HandleFunc("/", indexGetHandler).Methods("GET")
 	r.HandleFunc("/", indexPostHandler).Methods("POST")
 	r.HandleFunc("/login", loginGetHandler).Methods("GET")
@@ -32,11 +30,17 @@ func main() {
 	fs := http.FileServer(http.Dir("./static/"))
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", fs))
 	http.Handle("/", r)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8000", nil)
 }
 
 //request hello handle
 func indexGetHandler(w http.ResponseWriter, r *http.Request) {
+	session, _ := store.Get(r, "session")
+	_, ok := session.Values["username"]
+	if !ok {
+		http.Redirect(w, r, "/login", 302)
+		return
+	}
 	comments, err := client.LRange("comments", 0, 10).Result()
 	if err != nil {
 		return
@@ -73,17 +77,21 @@ func loginPostHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", 302)
 }
 
-func testGetHandler(w http.ResponseWriter, r *http.Request) {
-	session, _ := store.Get(r, "session")
-	untyped, ok := session.Values["username"]
-	if !ok {
+func registerGetHandler(w http.ResponseWriter, r *http.Request) {
+	templates.ExecuteTemplate(w, "register.html", nil)
+}
+
+func registerPostHandler(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	username := r.PostForm.Get("username")
+	password := r.PostForm.Get("password")
+	cost := bcrypt.DefaultCost
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), cost)
+	if err != nil {
 		return
 	}
-	username, ok := untyped.(string)
-	if !ok {
-		return
-	}
-	w.Write([]byte(username))
+	client.Set("user: "+username, hash, 0)
+	http.Redirect(w, r, "/login", 302)
 }
 
 //request contact page handle
