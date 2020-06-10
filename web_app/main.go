@@ -7,6 +7,7 @@ import (
 	"github.com/go-redis/redis"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
+	"golang.org/x/crypto/bcrypt"
 )
 
 //globals variables
@@ -27,7 +28,7 @@ func main() {
 	r.HandleFunc("/login", loginGetHandler).Methods("GET")
 	r.HandleFunc("/login", loginPostHandler).Methods("POST")
 	r.HandleFunc("/register", registerGetHandler).Methods("GET")
-	r.HandleFunc("/register", registerPostHandler).Methods("POST")	
+	r.HandleFunc("/register", registerPostHandler).Methods("POST")
 	fs := http.FileServer(http.Dir("./static/"))
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", fs))
 	http.Handle("/", r)
@@ -59,11 +60,11 @@ func loginPostHandler(w http.ResponseWriter, r *http.Request) {
 	username := r.PostForm.Get("username")
 	password := r.PostForm.Get("password")
 	hash, err := client.Get("user: " + username).Bytes()
-	if err != nil{
+	if err != nil {
 		return
 	}
 	err = bcrypt.CompareHashAndPassword(hash, []byte(password))
-	if err != nil{
+	if err != nil {
 		return
 	}
 	session, _ := store.Get(r, "session")
