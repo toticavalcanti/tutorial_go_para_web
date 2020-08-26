@@ -2,8 +2,9 @@ package main
 
 import (
 	"net/http"
-	"./routes"
+
 	"./models"
+	"./routes"
 	"./utils"
 )
 
