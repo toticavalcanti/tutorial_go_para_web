@@ -35,6 +35,10 @@ func NewUser(username string, hash []byte) (*User, error) {
 	return &User{key}, nil
 }
 
+func (user *User) GetId() (int64, error) {
+	return client.HGet(user.key, "id").Int64()
+}
+
 func (user *User) GetUsername() (string, error) {
 	return client.HGet(user.key, "username").Result()
 }
