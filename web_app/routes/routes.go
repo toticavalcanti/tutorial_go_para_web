@@ -2,11 +2,12 @@ package routes
 
 import (
 	"net/http"
-	"github.com/gorilla/mux"
+
 	"../middleware"
 	"../models"
 	"../sessions"
 	"../utils"
+	"github.com/gorilla/mux"
 )
 
 func NewRouter() *mux.Router {
@@ -66,7 +67,7 @@ func loginPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	session, _ := sessions.Store.Get(r, "session")
-	session.Values["username"] = username
+	session.Values["user_id"] = username
 	session.Save(r, w)
 	http.Redirect(w, r, "/", 302)
 }
