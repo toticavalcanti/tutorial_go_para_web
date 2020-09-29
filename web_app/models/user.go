@@ -1,8 +1,9 @@
 package models
 
 import (
-	"fmt"
 	"errors"
+	"fmt"
+
 	"github.com/go-redis/redis"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -70,12 +71,12 @@ func GetUserByUsername(username string) (*User, error) {
 	return &User{key}, nil
 }
 
-func AuthenticateUser(username, password string) error {
+func AuthenticateUser(username, password string) (*User, error) {
 	user, err := GetUserByUsername(username)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return user.Authenticate(password)
+	return user, user.Authenticate(password)
 }
 
 func RegisterUser(username, password string) error {
