@@ -67,7 +67,7 @@ func loginPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	session, _ := sessions.Store.Get(r, "session")
-	session.Values["user_id"] = username
+	session.Values["user_id"] = userId
 	session.Save(r, w)
 	http.Redirect(w, r, "/", 302)
 }
