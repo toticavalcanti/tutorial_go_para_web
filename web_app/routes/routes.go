@@ -66,6 +66,12 @@ func loginPostHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
+	userId, err := user.GetId()
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Internal server error"))
+		return
+	}
 	session, _ := sessions.Store.Get(r, "session")
 	session.Values["user_id"] = userId
 	session.Save(r, w)
