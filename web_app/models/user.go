@@ -71,8 +71,7 @@ func GetUserByUsername(username string) (*User, error) {
 	} else if err != nil {
 		return nil, err
 	}
-	key := fmt.Sprintf("user:%d", id)
-	return &User{key}, nil
+	return GetUserById(id)
 }
 
 func AuthenticateUser(username, password string) (*User, error) {

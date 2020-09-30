@@ -11,8 +11,13 @@
 				<button type="submit">Post Update</button>
 			</div>
 		</form>
-		{{ range . }}
-		<div>{{ . }}</div>
+		{{ range .Updates }}
+		<div>
+			<div>
+				<strong>{{ .GetUser.GetUsername }} wrote:</strong>
+			</div>
+			<div>{{ .GetBody }}</div>
+		</div>
 		{{ end }}
 	</body>
 </html>
