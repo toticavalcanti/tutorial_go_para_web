@@ -1,9 +1,8 @@
 package models
 
 import (
-	"errors"
 	"fmt"
-
+	"errors"
 	"github.com/go-redis/redis"
 	"golang.org/x/crypto/bcrypt"
 )

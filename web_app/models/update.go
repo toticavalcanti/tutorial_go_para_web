@@ -1,6 +1,8 @@
 package models
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Update struct {
 	key string
@@ -35,6 +37,7 @@ func (update *Update) GetUser() (*User, error) {
 	}
 	return GetUserById(userId)
 }
+
 
 func GetUpdates() ([]*Update, error) {
 	updateIds, err := client.LRange("updates", 0, 10).Result()

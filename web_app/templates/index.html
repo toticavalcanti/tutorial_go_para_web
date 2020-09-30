@@ -6,12 +6,12 @@
 	<body>
 		<h1>Updates</h1>
 		<form method="POST">
-			<textarea name="Update"></textarea>
+			<textarea name="update"></textarea>
 			<div>
 				<button type="submit">Post Update</button>
 			</div>
 		</form>
-		{{ range .Updates }}
+		{{ range . }}
 		<div>
 			<div>
 				<strong>{{ .GetUser.GetUsername }} wrote:</strong>

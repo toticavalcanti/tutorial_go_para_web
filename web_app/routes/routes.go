@@ -2,12 +2,11 @@ package routes
 
 import (
 	"net/http"
-
+	"github.com/gorilla/mux"
 	"../middleware"
 	"../models"
 	"../sessions"
 	"../utils"
-	"github.com/gorilla/mux"
 )
 
 func NewRouter() *mux.Router {
@@ -35,14 +34,13 @@ func indexGetHandler(w http.ResponseWriter, r *http.Request) {
 
 func indexPostHandler(w http.ResponseWriter, r *http.Request) {
 	session, _ := sessions.Store.Get(r, "session")
-	untypeduserId := session.Values["user_id"]
-	userId, ok := untypeduserId.(int64)
+	untypedUserId := session.Values["user_id"]
+	userId, ok := untypedUserId.(int64)
 	if !ok {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("Internal server error"))
 		return
 	}
-
 	r.ParseForm()
 	body := r.PostForm.Get("update")
 	err := models.PostUpdate(userId, body)
