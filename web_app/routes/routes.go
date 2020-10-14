@@ -2,12 +2,11 @@ package routes
 
 import (
 	"net/http"
-
+	"github.com/gorilla/mux"
 	"../middleware"
 	"../models"
 	"../sessions"
 	"../utils"
-	"github.com/gorilla/mux"
 )
 
 func NewRouter() *mux.Router {
@@ -33,10 +32,10 @@ func indexGetHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	utils.ExecuteTemplate(w, "index.html", struct {
-		Title   string
+		Title string
 		Updates []*models.Update
-	}{
-		Title:   "All updates",
+	} {
+		Title: "All updates",
 		Updates: updates,
 	})
 }
@@ -83,10 +82,10 @@ func userGetHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	utils.ExecuteTemplate(w, "index.html", struct {
-		Title   string
+		Title string
 		Updates []*models.Update
-	}{
-		Title:   username,
+	} {
+		Title: username,
 		Updates: updates,
 	})
 }
