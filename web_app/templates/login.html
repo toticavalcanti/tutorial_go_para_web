@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title>Login</title>
+    </head>
+    <body>
+        {{ if . }}
+        <div class="error">{{ . }}</div>
+        {{ end }}
+        <form method="POST">
+            <div>Username: <input name="username"></div>
+            <div>Password: <input name="password"></div>
+            <div>
+                <button type="submit">Login</button>
+            </div>
+        </form>
+    </body>
+</html>
