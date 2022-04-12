@@ -41,7 +41,7 @@ func indexGetHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", 302)
 		return
 	}
-	comments, err := client.LRange(client.Context(), "comments", 0, 10).Result()
+	comments, er"comments", 0, 10).Result()
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("Internal server error"))
