@@ -26,7 +26,7 @@ func main(){
 
  //request index page handle
  func indexHandler(w http.ResponseWriter, r *http.Request){
-	comments, err := client.LRange(client.Context(), "comments", 0, 10).Result()
+	comments, err := client.LRange("comments", 0, 10).Result()
 	if err != nil{
 		return
 	}	 
